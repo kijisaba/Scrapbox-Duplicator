@@ -28,4 +28,4 @@ jobs:
           SOURCE_PROJECT_NAME: ${{ secrets.SOURCE_PROJECT_NAME }}
           DESTINATION_PROJECT_NAME: ${{ secrets.DESTINATION_PROJECT_NAME }}
           SHOULD_DUPLICATE_BY_DEFAULT: ${{ secrets.SHOULD_DUPLICATE_BY_DEFAULT }}
-        run: deno run --allow-net --allow-read=./ --allow-write --allow-env index.ts
+        run: deno run --allow-import --allow-net=scrapbox.io,jsr.io,deno.land --allow-read=./ --allow-write --allow-env index.ts

@@ -1,4 +1,4 @@
-import { assert, is, exportPages, importPages } from "./deps.ts";
+import { assert, is, exportPages, importPages, isErr, unwrapOk } from "./deps.ts";
 
 const sid = Deno.env.get("SID");
 const exportingProjectName = Deno.env.get("SOURCE_PROJECT_NAME"); //インポート元(本来はprivateプロジェクト)
@@ -15,13 +15,13 @@ const result = await exportPages(exportingProjectName, {
   sid,
   metadata: true,
 });
-if (!result.ok) {
-  const error = new Error();
-  error.name = `${result.value.name} when exporting a json file`;
-  error.message = result.value.message;
-  throw error;
+// 最新の Result 型の仕様（ isErr ）に合わせた以下のチェックに書き換え
+if (isErr(result)) {
+  console.error("❌ Scrapbox からのデータ取得に失敗しました。");
+  console.error("エラー詳細:", result.err);
+  throw new Error("Export failed");
 }
-const { pages } = result.value;
+const { pages } = unwrapOk(result);
 console.log(`Export ${pages.length}pages:`);
 for (const page of pages) {
   console.log(`\t${page.title}`);
@@ -48,11 +48,11 @@ if (importingPages.length === 0) {
   }, {
     sid,
   });
-  if (!result.ok) {
-    const error = new Error();
-    error.name = `${result.value.name} when importing pages`;
-    error.message = result.value.message;
-    throw error;
+  // 最新の Result 型の仕様（ isErr ）に合わせた以下のチェックに書き換え
+  if (isErr(result)) {
+    console.error("❌ Scrapbox への流し込みに失敗しました。");
+    console.error("エラー詳細:", result.err);
+    throw new Error("Import failed");
   }
-  console.log(result.value);
+  console.log(unwrapOk(result));
 }

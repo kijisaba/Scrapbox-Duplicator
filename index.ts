@@ -1,6 +1,7 @@
 import {
   assert,
   exportPages,
+  getXCsrfToken,
   importPages,
   is,
   isErr,
@@ -47,6 +48,16 @@ const importingPages = pages.filter(({ lines }) => {
 if (importingPages.length === 0) {
   console.log("No page to be imported found.");
 } else {
+  // インポートに必要な CSRF トークンを取得する
+  console.log("Fetching CSRF Token...");
+  const csrfResult = await getXCsrfToken({ sid, hostName: "scrapbox.io" });
+  if (isErr(csrfResult)) {
+    console.error("❌ CSRFトークンの取得に失敗しました。");
+    console.error("エラー詳細:", csrfResult.err);
+    throw new Error("Failed to get CSRF token");
+  }
+  const csrfToken = unwrapOk(csrfResult);
+
   console.log(
     `Importing ${importingPages.length} pages to "/${importingProjectName}"...`,
   );
@@ -54,7 +65,7 @@ if (importingPages.length === 0) {
     pages: importingPages,
   }, {
     sid,
-    // ホスト名を追加して、CSRFトークンの取得先を指定
+    csrfToken, // 取得したCSRFトークンを渡す
     hostName: "scrapbox.io",
   });
   // 最新の Result 型の仕様（ isErr ）に合わせた以下のチェックに書き換え

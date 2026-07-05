@@ -1,4 +1,4 @@
-import { assertString, exportPages, importPages } from "./deps.ts";
+import { assert, exportPages, importPages } from "./deps.ts";
 
 const sid = Deno.env.get("SID");
 const exportingProjectName = Deno.env.get("SOURCE_PROJECT_NAME"); //インポート元(本来はprivateプロジェクト)
@@ -6,9 +6,9 @@ const importingProjectName = Deno.env.get("DESTINATION_PROJECT_NAME"); //イン�
 const shouldDuplicateByDefault =
   Deno.env.get("SHOULD_DUPLICATE_BY_DEFAULT") === "True";
 
-assertString(sid);
-assertString(exportingProjectName);
-assertString(importingProjectName);
+assert(sid);
+assert(exportingProjectName);
+assert(importingProjectName);
 
 console.log(`Exporting a json file from "/${exportingProjectName}"...`);
 const result = await exportPages(exportingProjectName, {

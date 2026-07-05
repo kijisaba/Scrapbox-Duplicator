@@ -1,7 +1,7 @@
 import {
   assert,
   exportPages,
-  getXCsrfToken,
+  getCSRFToken,
   importPages,
   is,
   isErr,
@@ -50,7 +50,7 @@ if (importingPages.length === 0) {
 } else {
   // インポートに必要な CSRF トークンを取得する
   console.log("Fetching CSRF Token...");
-  const csrfResult = await getXCsrfToken({ sid, hostName: "scrapbox.io" });
+  const csrfResult = await getCSRFToken({ sid, hostName: "scrapbox.io" });
   if (isErr(csrfResult)) {
     console.error("❌ CSRFトークンの取得に失敗しました。");
     console.error("エラー詳細:", csrfResult.err);

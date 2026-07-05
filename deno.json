@@ -5,8 +5,8 @@
     ]
   },
   "imports": {
-    "dotenv": "https://deno.land",
-    "unknownutil": "https://deno.land",
+    "dotenv": "jsr:@std/dotenv",
+    "unknownutil": "jsr:@core/unknownutil",
     "cosense-std": "jsr:@cosense/std@0.31.0/rest"
   }
 }

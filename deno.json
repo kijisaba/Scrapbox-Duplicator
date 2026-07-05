@@ -7,6 +7,6 @@
   "imports": {
     "dotenv": "https://deno.land",
     "unknownutil": "https://deno.land",
-    "cosense-std": "jsr:@cosense/std@0.31.0/rest/page-data.ts"
+    "cosense-std": "jsr:@cosense/std@0.31.0/rest"
   }
 }

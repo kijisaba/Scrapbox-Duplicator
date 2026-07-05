@@ -1,3 +1,3 @@
 import "dotenv";
-export { assert } from "unknownutil";
+export { assert, is } from "unknownutil";
 export * from "cosense-std";

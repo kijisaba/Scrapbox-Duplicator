@@ -54,6 +54,8 @@ if (importingPages.length === 0) {
     pages: importingPages,
   }, {
     sid,
+    // ホスト名を追加して、CSRFトークンの取得先を指定
+    hostName: "scrapbox.io",
   });
   // 最新の Result 型の仕様（ isErr ）に合わせた以下のチェックに書き換え
   if (isErr(result)) {

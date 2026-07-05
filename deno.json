@@ -7,7 +7,7 @@
   "imports": {
     "dotenv": "jsr:@std/dotenv",
     "unknownutil": "jsr:@core/unknownutil",
-    "cosense-std": "jsr:@cosense/std@0.31.0/rest",
+    "cosense-std": "jsr:@cosense/std/rest",
     "option-t/plain_result": "npm:option-t@^53.0.0/plain_result"
   }
 }

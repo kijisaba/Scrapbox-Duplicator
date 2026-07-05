@@ -20,7 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: denoland/setup-deno@v2
-
+      - name: Format code
+        run: deno fmt
       - name: Export from Scrapbox(/PROJECT_NAME to PROJECT_NAME.json)
         env:
           SID: ${{ secrets.SID }}

@@ -6,14 +6,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: "1.18.2"
+      # v2 から Node 24に対応した最新の v6 に変更
+      - uses: actions/checkout@v6
+
+      # v1 から 最新の v2 に変更（古いバージョン固定の「with」は不要になったため削除）
+      - uses: denoland/setup-deno@v2
+
       - name: Check fmt
         run: deno fmt --check
       - name: Run lint
         run: deno lint
       - name: Run type check
         run: deno cache *.ts
-

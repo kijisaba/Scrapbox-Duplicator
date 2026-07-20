@@ -38,14 +38,29 @@ globalThis.fetch = function (
 
   // scrapbox.io 宛てのリクエストに対してヘッダーを追加
   if (url.includes("scrapbox.io")) {
-    const headers = new Headers(init?.headers || {});
+    const headers = new Headers();
 
-    // Origin ヘッダーを強制付与
+    // 1. 元の Request オブジェクトが存在する場合、そのヘッダー(Cookieなど)をすべてコピーして引き継ぐ
+    if (input instanceof Request) {
+      for (const [key, value] of input.headers.entries()) {
+        headers.set(key, value);
+      }
+    }
+
+    // 2. init に指定された追加のヘッダー情報があればマージする
+    if (init?.headers) {
+      const initHeaders = new Headers(init.headers);
+      for (const [key, value] of initHeaders.entries()) {
+        headers.set(key, value);
+      }
+    }
+
+    // 3. Origin ヘッダーを強制付与
     if (!headers.has("Origin")) {
       headers.set("Origin", "https://scrapbox.io");
     }
 
-    // Referer ヘッダーを強制付与
+    // 4. Referer ヘッダーを強制付与
     if (!headers.has("Referer")) {
       // URLから対象のプロジェクト名を抽出。抽出できない場合は設定されたインポート先プロジェクト名を使用
       const match = url.match(/scrapbox\.io\/api\/page-data\/import\/([^\/]+)/) ||

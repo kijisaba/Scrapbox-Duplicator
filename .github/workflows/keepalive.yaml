@@ -21,4 +21,4 @@ jobs:
           # 維持したいワークフローのファイル名を指定して有効化
           gh workflow enable duplicator.yml
           # 複数ある場合は行を追加
-          # gh workflow enable udd.yml
+          gh workflow enable keepalive.yaml

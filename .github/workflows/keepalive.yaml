@@ -1,0 +1,24 @@
+name: Keepalive Workflow
+
+on:
+  schedule:
+    # 毎月1日と15日の午前0時(UTC)に実行（遅延やスキップを考慮し月2回推奨）
+    - cron: '0 0 1,15 * *'
+  workflow_dispatch: # 手動実行も可能にしておく
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    # ワークフローを有効化するための権限を付与
+    permissions:
+      actions: write
+    steps:
+      - name: Enable target workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          # 維持したいワークフローのファイル名を指定して有効化
+          gh workflow enable duplicator.yml
+          # 複数ある場合は行を追加
+          # gh workflow enable udd.yml
